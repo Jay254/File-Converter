@@ -2,6 +2,15 @@
 
 A web-based file converter that supports conversion between the top 10 most common file formats.
 
+## Features
+
+- 🚀 Fast and efficient file conversion
+- 🔒 Secure: Files are automatically deleted after conversion
+- 💻 User-friendly web interface
+- 📱 Responsive design
+- 🔄 Supports multiple file formats
+- ⚡ Real-time conversion status
+
 ## Supported Formats
 
 - PDF (Portable Document Format)
@@ -51,6 +60,13 @@ python app.py
 3. Click "Convert File"
 4. The converted file will be downloaded automatically
 
+## Security
+
+- All uploaded files are stored temporarily in the `uploads` directory
+- Files are automatically deleted after conversion
+- Maximum file size is limited to 16MB
+- Only supported file formats are allowed
+
 ## Requirements
 
 - Python 3.8 or higher
@@ -85,6 +101,29 @@ file-converter/
 └── uploads/           # Temporary storage for uploaded files
 ```
 
+## Troubleshooting
+
+Common issues and solutions:
+
+1. **File not converting**
+   - Check if the file format is supported
+   - Ensure the file size is under 16MB
+   - Verify all dependencies are installed correctly
+
+2. **Application not starting**
+   - Make sure the virtual environment is activated
+   - Check if all dependencies are installed
+   - Verify Python version is 3.8 or higher
+
+3. **Conversion errors**
+   - Check if FFmpeg is installed (for media files)
+   - Verify LibreOffice is installed (for office documents)
+   - Ensure you have write permissions in the uploads directory
+
 ## Contributing
 
 Feel free to submit issues and enhancement requests! 
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details. 

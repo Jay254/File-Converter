@@ -1,20 +1,20 @@
 # Core dependencies
 python-docx==0.8.11
 PyPDF2==3.0.1
-pdf2docx==0.5.6
-Pillow==10.0.0
-openpyxl==3.1.2
-python-pptx==0.6.21
-pandas==2.0.3
-moviepy==1.0.3
-pydub==0.25.1
-ffmpeg-python==0.2.0
-weasyprint==60.1
-reportlab==4.0.4
-img2pdf==0.4.4
-html2docx==0.0.6
-comtypes==1.2.0
+pdf2docx>=0.5.6
+Pillow==10.4.0
+openpyxl>=3.1.2
+python-pptx>=0.6.21
+pandas>=2.0.3
+ffmpeg-python>=0.2.0
+reportlab==4.0.8
+img2pdf>=0.4.4
+html2docx>=0.0.6
+comtypes>=1.2.0
+beautifulsoup4==4.9.3
+markdown>=3.4.3
+docx2pdf>=0.1.8
 
 # Web framework
-Flask==2.3.3
-Werkzeug==2.3.7 
+Flask==2.0.1
+Werkzeug>=2.3.7 

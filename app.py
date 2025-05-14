@@ -1,18 +1,7 @@
 from flask import Flask, request, render_template, send_file
 import os
 from werkzeug.utils import secure_filename
-from converters import (
-    pdf_converter,
-    docx_converter,
-    image_converter,
-    video_converter,
-    audio_converter,
-    excel_converter,
-    powerpoint_converter,
-    text_converter,
-    html_converter,
-    csv_converter
-)
+from converters import get_converter
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -61,10 +50,24 @@ def convert_file():
             return send_file(converted_file, as_attachment=True)
         except Exception as e:
             return f'Error converting file: {str(e)}', 500
+        finally:
+            # Clean up temporary files
+            try:
+                os.remove(filepath)
+                if os.path.exists(converted_file):
+                    os.remove(converted_file)
+            except:
+                pass
 
 def convert_file_format(filepath, source_format, target_format):
-    # This will be implemented in the converters module
-    pass
+    """
+    Convert a file from source_format to target_format
+    """
+    converter = get_converter(source_format, target_format)
+    if not converter:
+        raise ValueError(f"Conversion from {source_format} to {target_format} is not supported")
+    
+    return converter(filepath, target_format)
 
 if __name__ == '__main__':
     app.run(debug=True) 
