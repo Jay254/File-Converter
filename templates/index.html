@@ -5,87 +5,204 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Converter</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6f42c1 0%, #a084e8 100%);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .converter-container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 32px 28px 24px 28px;
+            box-shadow: 0 8px 32px rgba(111,66,193,0.10);
+            border-radius: 18px;
+            background: #fff;
+            position: relative;
+        }
+        .text-nw-purple {
+            color: #6f42c1;
         }
         .drop-zone {
-            border: 2px dashed #ccc;
-            border-radius: 4px;
-            padding: 20px;
+            border: 2.5px dashed #6f42c1;
+            border-radius: 12px;
+            padding: 38px 10px 30px 10px;
             text-align: center;
             cursor: pointer;
-            margin: 20px 0;
+            margin: 28px 0 20px 0;
+            background: #ede7f6;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+            box-shadow: 0 2px 12px rgba(111,66,193,0.07);
         }
-        .drop-zone:hover {
-            border-color: #0d6efd;
+        .drop-zone.active {
+            border-color: #a084e8;
+            background: #f3e8ff;
+        }
+        .drop-zone .file-icon {
+            font-size: 38px;
+            color: #6f42c1;
+            margin-bottom: 10px;
+        }
+        .drop-zone .file-name {
+            font-size: 1.1rem;
+            color: #4b286d;
+            margin-top: 10px;
+        }
+        .choose-btn {
+            background: #6f42c1;
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 10px 28px;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-bottom: 6px;
+            box-shadow: 0 2px 8px rgba(111,66,193,0.10);
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .choose-btn:hover, .choose-btn:focus {
+            background: #4b286d;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #6f42c1;
+        }
+        .btn-primary {
+            background: #6f42c1;
+            border: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 10px 0;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(111,66,193,0.08);
+            transition: background 0.2s;
+        }
+        .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+            background: #4b286d;
+        }
+        .spinner-border {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-left: 8px;
+            display: none;
+        }
+        .feedback {
+            margin-top: 18px;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .converter-container {
+                max-width: 98vw;
+                padding: 18px 4vw 16px 4vw;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="converter-container">
-            <h1 class="text-center mb-4">File Converter</h1>
-            <form action="/convert" method="post" enctype="multipart/form-data">
-                <div class="drop-zone" id="dropZone">
-                    <p>Drag and drop your file here or click to select</p>
-                    <input type="file" name="file" id="fileInput" class="d-none">
+    <div class="converter-container">
+        <h1 class="text-center mb-3 text-nw-purple" style="font-weight:700;">File Converter</h1>
+        <form action="/convert" method="post" enctype="multipart/form-data" id="convertForm">
+            <div class="drop-zone" id="dropZone">
+                <div class="file-icon">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="38" height="38"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7V3a1 1 0 011-1h8a1 1 0 011 1v18a1 1 0 01-1 1H8a1 1 0 01-1-1v-4M7 7h10M7 7l-4 4m0 0l4 4m-4-4h14"/></svg>
                 </div>
-                
-                <div class="mb-3">
-                    <label for="targetFormat" class="form-label">Convert to:</label>
-                    <select class="form-select" name="target_format" id="targetFormat" required>
-                        <option value="">Select target format</option>
-                        <option value="pdf">PDF</option>
-                        <option value="docx">DOCX</option>
-                        <option value="txt">TXT</option>
-                        <option value="jpg">JPG</option>
-                        <option value="png">PNG</option>
-                        <option value="mp4">MP4</option>
-                        <option value="mp3">MP3</option>
-                        <option value="xlsx">XLSX</option>
-                        <option value="pptx">PPTX</option>
-                        <option value="html">HTML</option>
-                        <option value="csv">CSV</option>
-                    </select>
-                </div>
-                
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Convert File</button>
-                </div>
-            </form>
-        </div>
+                <p class="drop-text mb-2">Drag & drop or</p>
+                <button type="button" class="choose-btn" id="chooseBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/><path d="M8 12h8M12 8v8" stroke-width="2"/></svg>
+                    Choose File
+                </button>
+                <div class="file-name"></div>
+                <input type="file" name="file" id="fileInput" class="d-none">
+            </div>
+            <div class="mb-3">
+                <label for="targetFormat" class="form-label">Convert to:</label>
+                <select class="form-select" name="target_format" id="targetFormat" required>
+                    <option value="">Select target format</option>
+                    <option value="pdf">PDF</option>
+                    <option value="docx">DOCX</option>
+                    <option value="txt">TXT</option>
+                    <option value="jpg">JPG</option>
+                    <option value="png">PNG</option>
+                    <option value="mp4">MP4</option>
+                    <option value="mp3">MP3</option>
+                    <option value="xlsx">XLSX</option>
+                    <option value="pptx">PPTX</option>
+                    <option value="html">HTML</option>
+                    <option value="csv">CSV</option>
+                </select>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" id="convertBtn">
+                    Convert File
+                    <span class="spinner-border spinner-border-sm" id="spinner" role="status" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="feedback alert mt-3 text-center" id="feedback"></div>
+        </form>
     </div>
-
     <script>
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
+        const fileNameDiv = dropZone.querySelector('.file-name');
+        const dropText = dropZone.querySelector('.drop-text');
+        const chooseBtn = document.getElementById('chooseBtn');
+        const convertBtn = document.getElementById('convertBtn');
+        const spinner = document.getElementById('spinner');
+        const feedback = document.getElementById('feedback');
+        const form = document.getElementById('convertForm');
 
-        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('click', (e) => {
+            if (e.target !== chooseBtn) fileInput.click();
+        });
+        chooseBtn.addEventListener('click', () => fileInput.click());
 
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
-            dropZone.style.borderColor = '#0d6efd';
+            dropZone.classList.add('active');
         });
 
         dropZone.addEventListener('dragleave', () => {
-            dropZone.style.borderColor = '#ccc';
+            dropZone.classList.remove('active');
         });
 
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropZone.style.borderColor = '#ccc';
+            dropZone.classList.remove('active');
             fileInput.files = e.dataTransfer.files;
+            updateFileName();
         });
 
-        fileInput.addEventListener('change', () => {
+        fileInput.addEventListener('change', updateFileName);
+
+        function updateFileName() {
             if (fileInput.files.length > 0) {
-                dropZone.querySelector('p').textContent = fileInput.files[0].name;
+                fileNameDiv.textContent = fileInput.files[0].name;
+                dropText.style.display = 'none';
+            } else {
+                fileNameDiv.textContent = '';
+                dropText.style.display = '';
             }
+        }
+
+        form.addEventListener('submit', function() {
+            convertBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            feedback.style.display = 'none';
+            // Fallback: re-enable after 5 seconds
+            setTimeout(() => {
+                convertBtn.disabled = false;
+                spinner.style.display = 'none';
+            }, 5000);
         });
     </script>
 </body>

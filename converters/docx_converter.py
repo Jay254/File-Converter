@@ -12,8 +12,12 @@ def convert_docx(filepath, target_format):
     output_path = os.path.splitext(filepath)[0] + f'.{target_format}'
     
     if target_format == 'pdf':
-        # DOCX to PDF conversion
-        convert(filepath, output_path)
+        # DOCX to PDF conversion with COM initialization for Windows
+        pythoncom.CoInitialize()
+        try:
+            convert(filepath, output_path)
+        finally:
+            pythoncom.CoUninitialize()
         
     elif target_format == 'txt':
         # DOCX to TXT conversion
